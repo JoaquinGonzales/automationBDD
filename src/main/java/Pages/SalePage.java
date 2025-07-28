@@ -1,5 +1,6 @@
 package Pages;
 
+import io.cucumber.java.eo.Se;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,11 +15,14 @@ public class SalePage extends BasePage{
     @FindBy(xpath = "//p[@class='card-text']/following-sibling::button")
     protected WebElement addProductButton;
 
-    @FindBy(xpath = "//input[@placeholder='Ingrese CI']")
+    @FindBy(xpath = "//input[@placeholder='Ingrese Codigo']")
     protected WebElement searchClientInputField;
 
     @FindBy(xpath = "//button[text()=' Buscar ']")
     protected WebElement searchButton;
+
+    @FindBy(xpath = "//h4[text()='Condición de Pago']/following-sibling::div/select")
+    protected WebElement paymentMethodDropDown;
 
     @FindBy(xpath = "//button[text()=' Pagar ']")
     protected WebElement payButton;
@@ -60,6 +64,12 @@ public class SalePage extends BasePage{
         }
         alert.accept();
         return flag;
+    }
+
+    public void selectPaymentMethod(String paymentMethod)
+    {
+        Select select  = new Select(paymentMethodDropDown);
+        select.selectByVisibleText(paymentMethod);
     }
 
 }

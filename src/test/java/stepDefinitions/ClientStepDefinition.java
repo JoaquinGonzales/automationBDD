@@ -1,4 +1,4 @@
-package StepDefinitions;
+package stepDefinitions;
 
 import Pages.HomePage;
 import Pages.ClientPage;
@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import utils.DriverManager;
 
-public class CreateAccountStepDefinition {
+public class ClientStepDefinition {
 
     WebDriver driver = DriverManager.getDriver();
     private HomePage homePage = new HomePage(driver);
@@ -27,9 +27,9 @@ public class CreateAccountStepDefinition {
         clientPage.clickOnCreateNewClientButton();
     }
 
-    @And("el usuario llena el formulario con {string} como nombre y {string} CI")
-    public void el_usuario_llena_el_formulario_con_como_nombre_y_ci(String name, String ci) {
-        clientPage.fillForm(name,ci);
+    @And("el usuario llena el formulario con {string} como codigo, {string} como nombre, {string} CI y {string} como correo")
+    public void el_usuario_llena_el_formulario_con_como_codigo_como_nombre_ci_y_como_correo(String clientCode, String name, String ci, String clientEmail) {
+        clientPage.fillForm(clientCode, name, ci, clientEmail);
     }
 
     @And("el usuario selecciona {string} como Grupo Cliente")
@@ -42,9 +42,24 @@ public class CreateAccountStepDefinition {
         clientPage.clickSaveButton();
     }
 
+    @And("se deja el formulario en blanco")
+    public void se_deja_el_formulario_en_blanco() {
+        clientPage.leaveFormInBlank();
+    }
+
     @Then("un nuevo cliente {string} ha sido creado")
     public void un_nuevo_cliente_ha_sido_creado(String clientName) {
         Assert.assertTrue("Cliente creado", clientPage.userAddedToTheTable(clientName));
+        DriverManager.closeDriver();
+    }
+
+    @Then("el formulario debe mostrar que campos son obligatorios")
+    public void el_formulario_debe_mostrar_que_campos_son_obligatorios() {
+        Assert.assertTrue(clientPage.validatecodeFieldMandatoryMessage());
+        Assert.assertTrue(clientPage.validateNameFieldMandatoryMessageIdDisplayed());
+        Assert.assertTrue(clientPage.validateDocumentTypeDropDownMandatoryMessageIdDisplayed());
+        Assert.assertTrue(clientPage.validateDocumentNumberFieldMandatoryMessageIdDisplayed());
+        Assert.assertTrue(clientPage.validateEmailFieldMandatoryMessageIdDisplayed());
         DriverManager.closeDriver();
     }
 

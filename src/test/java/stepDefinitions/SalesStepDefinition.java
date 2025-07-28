@@ -1,11 +1,10 @@
-package StepDefinitions;
+package stepDefinitions;
 
 import Pages.HomePage;
 import Pages.SalePage;
 import io.cucumber.java.en.*;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 import utils.DriverManager;
 
 public class SalesStepDefinition {
@@ -31,6 +30,11 @@ public class SalesStepDefinition {
     @And("el usuario busca su codigo ingresando {string} y hace click en el boton buscar")
     public void el_usuario_busca_su_codigo_ingresando_y_hace_click_en_el_boton_buscar(String clientCode) {
         salePage.setClientCodeInField(clientCode);
+    }
+
+    @And("el usuario seleccion {string} como condicion de pago")
+    public void el_usuario_seleccion_como_condicion_de_pago(String paymentMethod) {
+        salePage.selectPaymentMethod(paymentMethod);
     }
 
     @When("el usuario hace click en el boton Pagar")
